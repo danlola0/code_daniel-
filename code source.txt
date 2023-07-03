@@ -1,0 +1,878 @@
+PDO :php data object interface qui nous permet acceder à une base de donnée 
+prepare prepare une requette a execution 
+
+
+if(isset($_POST['nom'] && isset($_POST['password']{
+$sql=$bd->prepare("INSERT INTO login value(null,:nom ,:password)
+
+}
+
+
+
+code source formulaire
+
+include('bienvenu.php');
+$bd=connection();
+
+
+if(isset($_POST['nom']) && isset($_POST['nom'])){
+
+$sql=$bd->prepare("INSERT INTO login values(null,:nom ,:password)");
+$sql->bindValue(':nom',$_POST['nom']);
+$sql->bindValue(':password',$_POST['password']);
+
+$re=$sql->execute();
+
+
+
+
+}
+
+
+
+
+?>
+
+code login (select)
+
+if(isset($_POST['envoi'])){
+
+	if(empty ($_POST['nom']) || empty ($_POST['password']) ){
+       
+ echo 'tout les champs sont obligatoire';
+   		
+	}
+	else{
+
+   $sql="SELECT * FROM login where nom=:nom and password=:password ";
+   $receve=$dan->prepare($sql);
+   $receve->execute(array('nom'=>$_POST['nom'], 'password'=>$_POST['password']));
+   $count=$receve->rowCount();
+  
+   if($count >0){
+
+	$_SESSION['nom']=$_POST['nom'];
+	header("location:cone.php");
+
+   }else{
+     echo ' <br> Mot de passe incorrect ' ;
+   } 
+	
+	}
+
+
+//////
+
+
+
+<?php 
+session_start();
+if(isset($_SESSION["nom"])){
+echo ' <br> bienvenu  '  .$_SESSION['nom'];
+
+
+}
+
+
+
+
+<h1>voici notre formulaire</h1>
+
+<form action="" method="post">
+<label for="">Usernamen</label> <br>
+<input type="text" name="nom"> <br>
+<label for="">votre mot de passe</label> <br>
+<input type="text" name="password"> <br>
+<input type="submit" value="Enregistre">
+
+
+<select name="liste" id="">
+<option value="choix1">choisice</option>
+<option value="choix2">rwanda</option>
+<option value="choix3">gabon</option>
+<option value="choix4">belgique</option>
+
+
+</select>
+</form>
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+code source connection
+
+<?php
+
+function connection(){
+ 
+    try{
+$bd=new PDO('mysql:host=localhost; dbname=exo','root','');
+
+
+echo'connection reussie';
+return $bd;
+}
+catch(PDOException $e){
+
+    echo'erreur sur la base de donnée' .$e;
+}
+
+
+
+
+
+
+
+}
+
+
+
+
+
+?>
+
+
+
+
+!empty :si la variable n'est pas vide 
+rowcount:permet de retourner les valeur 
+
+
+
+sur input mettez autocomplet:evite 
+
+
+
+code source table
+
+
+
+<table>
+<th>ID</th>
+<th>Nom</th>
+<th>gmail</th>
+<th>password</th>
+
+<?php 
+include('connection.php');
+$dan=connect();
+$sql=$dan->query( "SELECT * FROM login");
+while($aff=$sql->fetch()){  ?>
+<tr>
+<td> <?php echo $aff['id'] ;  ?> </td>
+<td> <?php echo $aff['nom'] ;  ?> </td>
+<td> <?php echo $aff['gmail'] ;  ?> </td>
+<td> <?php echo $aff['password'] ; ?> </td>
+
+</tr>
+
+<?php } ?>
+
+</table>
+
+
+
+
+bouttons supprimer avec php
+<a href="supprimer.php=id <?php echo $aff['id'] ?>" > Suprimer <\a>   //meme chose avec le bouton modifier
+
+page supprimer.php 
+
+
+if(isset($_GET['id']{
+ i$d=$_GET['id'];
+$sql=$bd->prepare("DELETE FROM login WHERE id=? ");
+$sql->execute(array($id));
+if($result){
+echo 'suppression reussie';
+header('locator:login.php);
+}
+else{
+
+echo 'pas de suppression';
+
+}
+
+}
+
+
+
+
+//Modifier
+
+<?php 
+include('connection.php');
+$dan=connect();
+
+if(isset($_GET['id'])){
+  $id=$_GET['id'];
+
+    $sql=$dan->query("SELECT * FROM login WHERE id=$id");
+    $result=$sql->fetch();
+
+
+}
+
+
+?>
+<h2>Modification</h2>
+
+
+<form action="" method="post">
+<label for="">Entrer le nom</label>      <input value="<?php echo $result['nom'] ; ?>" type="text" name='nom' placeholder='saisisez le nom'  autocomplet"off" > <br>
+<label for="">Entrer votre gmail</label>      <input  value="<?php echo $result['gmail'] ; ?>" type="text" name='gmail' placeholder='saisisez votre gmail'> <br>
+<label for="">Entrer le mot de passe</label>      <input value="<?php echo $result['password']  ?>" type="text" name='password' placeholder='saisisez le mot de passe'> <br>
+ <button type='submit' name='modifie'>Modifier l'Enregistrer</button>
+</form>
+
+
+<?php 
+
+
+
+if(isset($_POST['modifie'])){
+  $nom=$_POST['nom'];
+$gmail=$_POST['gmail'];
+$password=$_POST['password'];
+
+  $sql=$dan->prepare("UPDATE login SET nom=? ,gmail=? ,password=? WHERE id=$id");
+  $sql->execute(array($nom,$gmail,$password));
+  if($sql){
+  header('locator:table.php');
+    echo ' Modification reussie';
+  } else{
+   echo 'erreur';
+
+  }
+
+}
+
+
+
+?>
+
+
+cours git:
+definition :git est logiciel de controleur de version (versioning)
+
+code
+git init :permet de initialiser
+git add .:permer d'ajouter le ficher
+git status :etat de votre dossier 
+git commit -m "mon premier enregistrement" 
+git log :permet de voir tout le commit ou tout les enrgistrementss
+
+
+
+
+//sytsteme de gestion de resultat des etaudiant 
+
+*creation base de données 
+*un table avec 4 attribut :id ,nom ,gmail,genre,promotion,faculté,deparatement,date de naissance, 
+php creation d'une classe pour la connexion 
+interface pour ajouter les etudiant 
+*interface pour table des etudiants
+
+
+
+compte github:
+danlola0
+dylis12&
+
+compte instagram
+yongolola
+dylis12&
+
+
+
+site web deliberation :https://www.revuechercheur.com/index.php/home/frais-de-publication
+
+
+
+
+create view v_cours AS(
+    select cours.id_cour, cours.nom, cours.ponderation, cours.id_promo, promotion.nom from cours, promotion where cours.id_promo=ponderation.id_promo)
+
+
+
+
+
+
+
+
+create view v_deliberation AS(
+     R.id_result ,C.id_cour,C.ponderation,P.id_promo,P.nom as nom_promotion,D.id_depart ,D.nom as nom_departement,E.id_etud,E.nom as nom_etudiant,E.postnom as postnom_etudiant,E.prenom as prenom_etudiant,E.date_naissance as date_naissance_etudiant,E.matricule as matricule_etudiant,R.date_deliberation as resultat,CR.cote
+    
+    from cours C,promotion P,etudiant E,departement D,cours_resultat CR,resultat R
+    WHERE CR.id_result=R.id_result and CR.id_cour=C.id_cour and E.id_promo=P.id_promo and R.id_etudiant=E.id_etud
+
+
+
+create view v_deliberation AS(
+    SELECT 
+    	R.id_result,
+    	C.id_cour,
+    	C.ponderation,
+    	P.id_promo,
+    	P.nom as nom_promotion,
+    	D.id_depart,
+    	D.nom as nom_departement,
+    	E.id_etud,
+    	E.nom as nom_etudiant,
+    	E.postnom as postnom_etudiant,
+    	E.prenom as prenom_etudiant,
+    	E.date_naissance,
+    	E.matricule,
+    	R.date_resultat,
+    	CR.cote
+    from 
+    	cours C,
+    	promotion P,
+    	etudiant E,
+    	departement D,
+    	cours_resultat CR,
+    	resultat R
+    WHERE 
+    	CR.id_result=R.id_result and 
+    	CR.id_cour=C.id_cour and 
+    	E.id_promo=P.id_promo and 
+    	R.id_etud=E.id_etud
+	)
+
+
+
+
+
+////
+ SELECT 
+    	R.id as idDeliberation,
+    	C.id as idCours,
+    	C.ponderation,
+    	P.id as idPromo,
+    	P.nom as nom_promotion,
+    	D.id as idDepartement,
+    	D.nom as nom_departement,
+    	E.id as idEtudiant,
+    	E.nom as nom_etudiant,
+    	E.postnom as postnom_etudiant,
+    	E.prenom as prenom_etudiant,
+    	E.date_naissance,
+    	E.matricule,
+    	R.date_deliberation,
+    	R.cote
+    from 
+    	t_cour C,
+    	t_promotion P,
+    	t_etudiant E,
+    	t_departement D,
+    	t_deliberation R
+    WHERE 
+    	 
+    	R.idCour=C.id and 
+    	E.idPromo=P.id and 
+    	R.idEtudiant=E.id and
+	C.idPromo=P.id and
+	P.idDepart=D.id
+
+
+
+
+
+
+
+
+///
+CREATE VIEW v_pdf AS	(
+    SELECT  
+       E.id AS t_etudiant_id,      
+       C.id AS t_cour_id, 
+       D.id AS t_deliberation_id,     
+       E.nom AS t_etudiant_nom, 
+       C.nom AS t_cour_nom,      
+       C.ponderation AS t_cour_ponderation, 
+       D.cote AS t_deliberation_cote   
+     FROM  
+     t_cour C, 
+     t_etudiant E,        
+     t_deliberation D 
+     WHERE  
+        D.idEtudiant=E.id AND 
+        D.idCour=C.id     
+     )
+
+
+
+http://localhost/danlola/fpdf/coupons.php?id=5
+
+
+
+
+///
+
+
+
+<?php 
+require('fpdf.php');
+
+$conn=new PDO('mysql:host=localhost;dbname=deliberation','root',''); 
+ 
+$id=$_GET['id'];
+// Retrieve the data from the database 
+$sql = "SELECT * FROM v_pdf where t_etudiant_id=$id" ; 
+$result = $conn->query($sql);
+$result2 = $conn->query($sql); 
+ $rr=$result->fetchAll();
+  
+// Create a new PDF instance 
+$pdf = new FPDF(); 
+ 
+// Add a new page 
+$pdf->AddPage(); 
+ 
+// Set font and font size for the title 
+$pdf->SetFont('Arial','B',16); 
+ 
+// Add a title 
+$pdf->Cell(0,10,'RELEVE DE COTE FACULTE DE SCIENCE',0,1,'C'); 
+// Set font and font size for the table headers 
+$pdf->SetFont('Arial','B',12); 
+$pdf->cell(30,10,' '.'Etudiant: '.$rr[0]['t_etudiant_nom'].' ',1,0,'C');
+$pdf->Ln(20);
+// Set table headers 
+$pdf->Cell(50,10,'cour',1,0,'C'); 
+$pdf->Cell(50,10,'ponderation',1,0,'C'); 
+$pdf->Cell(50,10,'cote',1,1,'C'); 
+ 
+// Set font and font size for the table data 
+$pdf->SetFont('Arial','',12); 
+ 
+// Add table data from database query 
+if ($result->rowCount() > 0) { 
+    while($row = $result2->fetch()) { 
+        $pdf->Cell(50,10,$row["t_cour_nom"],1,0,'C'); 
+        $pdf->Cell(50,10,$row["t_cour_ponderation"],1,0,'C'); 
+        $pdf->Cell(50,10,$row["t_deliberation_cote"],1,1,'C'); 
+    } 
+} 
+ 
+// Output the PDF document 
+$pdf->Output(); 
+ 
+?> 
+
+
+///
+
+pourcentage 
+
+
+<?php   
+require('fpdf.php');  
+  
+$conn=new PDO('mysql:host=localhost;dbname=deliberation','root','');   
+   
+$id=$_GET['id'];  
+// Retrieve the data from the database   
+$sql = "SELECT * FROM v_pdf where t_etudiant_id=$id" ;   
+$result = $conn->query($sql);  
+$result2 = $conn->query($sql);   
+$rr=$result->fetchAll();  
+    
+// Create a new PDF instance   
+$pdf = new FPDF();   
+   
+// Add a new page   
+$pdf->AddPage();   
+   
+// Set font and font size for the title   
+$pdf->SetFont('Arial','B',16);    
+   
+// Add a title   
+$pdf->Cell(0,10,'RELEVE DE COTE FACULTE DE SCIENCE',0,1,'C');   
+// Set font and font size for the table headers   
+$pdf->SetFont('Arial','B',12);   
+$pdf->cell(30,10,' '.'Etudiant: '.$rr[0]['t_etudiant_nom'].' ',1,0,'C');  
+$pdf->Ln(20);  
+// Set table headers   
+$pdf->Cell(50,10,'cour',1,0,'C');   
+$pdf->Cell(50,10,'ponderation',1,0,'C');   
+$pdf->Cell(50,10,'cote',1,1,'C');   
+    
+// Set font and font size for the table data   
+$pdf->SetFont('Arial','',12);   
+   
+// Add table data from database query   
+if ($result->rowCount() > 0) {   
+    while($row = $result2->fetch()) {   
+        $pdf->Cell(50,10,$row["t_cour_nom"],1,0,'C');   
+        $pdf->Cell(50,10,$row["t_cour_ponderation"],1,0,'C');   
+        $pdf->Cell(50,10,$row["t_deliberation_cote"],1,1,'C');   
+    }   
+}   
+ 
+// Calculate the percentage of the total grade 
+$total = $conn->query("SELECT SUM(t_deliberation_cote) as total FROM v_pdf WHERE t_etudiant_id=$id")->fetch()['total']; 
+$percentage = round(($total/20)*100, 2); 
+ 
+// Set font and font size for the percentage   
+$pdf->SetFont('Arial','B',14);   
+ 
+// Add percentage 
+$pdf->Ln(10); 
+$pdf->Cell(0,10,'Total: '.$total.' | Pourcentage: '.$percentage.'%',0,1,'C'); 
+ 
+// Output the PDF document   
+$pdf->Output();   
+?>
+
+
+
+
+
+
+///SOMME
+
+
+<?php
+
+require('fpdf.php');
+
+$conn=new PDO('mysql:host=localhost;dbname=deliberation','root','');
+
+$id=$_GET['id'];
+// Retrieve the data from the database
+$sql = "SELECT * FROM v_pdf where t_etudiant_id=$id" ;
+$result = $conn->query($sql);
+$result2 = $conn->query($sql);
+$rr=$result->fetchAll();
+
+// Create a new PDF instance
+$pdf = new FPDF();
+
+// Add a new page
+$pdf->AddPage();
+
+// Set font and font size for the title
+$pdf->SetFont('Arial','B',16);
+
+// Add a title
+$pdf->Cell(0,10,'RELEVE DE COTE FACULTE DE SCIENCE',0,1,'C');
+// Set font and font size for the table headers
+$pdf->SetFont('Arial','B',12);
+$pdf->cell(30,10,' '.'Etudiant: '.$rr[0]['t_etudiant_nom'].' ',1,0,'C');
+$pdf->Ln(20);
+// Set table headers
+$pdf->Cell(50,10,'cour',1,0,'C');
+$pdf->Cell(50,10,'ponderation',1,0,'C');
+$pdf->Cell(50,10,'cote',1,1,'C');
+
+// Set font and font size for the table data
+$pdf->SetFont('Arial','',12);
+
+// Initialize the sum variable
+$sum = 0;
+
+// Add table data from database query
+if ($result->rowCount() > 0) {
+    while($row = $result2->fetch()) {
+        $pdf->Cell(50,10,$row["t_cour_nom"],1,0,'C');
+        $pdf->Cell(50,10,$row["t_cour_ponderation"]*20,1,0,'C');
+        // Add the weighted score to the sum variable
+        $sum += $row["t_cour_ponderation"]*20*$row["t_deliberation_cote"]/20;
+        $pdf->Cell(50,10,$row["t_deliberation_cote"],1,1,'C');
+    }
+}
+
+// Output the sum of weighted scores
+$pdf->Cell(50,10,'Total:',1,0,'C');
+$pdf->Cell(50,10,'',1,0,'C');
+$pdf->Cell(50,10,$sum,1,1,'C');
+
+// Output the PDF document
+$pdf->Output();
+
+
+
+
+?>
+
+
+
+///
+
+
+<?php
+ 
+ require('fpdf.php'); 
+ 
+ $conn=new PDO('mysql:host=localhost;dbname=deliberation','root',''); 
+  
+ $id=$_GET['id']; 
+ // Retrieve the data from the database 
+ $sql = "SELECT * FROM v_pdf where t_etudiant_id=$id" ; 
+ $result = $conn->query($sql); 
+ $result2 = $conn->query($sql); 
+ $rr=$result->fetchAll(); 
+  
+ // Create a new PDF instance 
+ $pdf = new FPDF(); 
+  
+ // Add a new page 
+ $pdf->AddPage(); 
+  
+ // Set font and font size for the title 
+ $pdf->SetFont('Arial','B',16); 
+  
+ // Add a title 
+ $pdf->Cell(0,10,'RELEVE DE COTE FACULTE DE SCIENCE',0,1,'C'); 
+ // Set font and font size for the table headers 
+ $pdf->SetFont('Arial','B',12); 
+ $pdf->cell(30,10,' '.'Etudiant: '.$rr[0]['t_etudiant_nom'].' ',1,0,'C'); 
+ $pdf->Ln(20); 
+ // Set table headers 
+ $pdf->Cell(50,10,'cour',1,0,'C'); 
+ $pdf->Cell(50,10,'ponderation',1,0,'C'); 
+ $pdf->Cell(50,10,'cote',1,1,'C'); 
+  
+ // Set font and font size for the table data 
+ $pdf->SetFont('Arial','',12); 
+  
+ // Initialize the sum variable 
+ $sum = 0; 
+ $total_ponderation = 0; // Initialize the total ponderation variable 
+  
+ // Add table data from database query 
+ if ($result->rowCount() > 0) { 
+     while($row = $result2->fetch()) { 
+         $pdf->Cell(50,10,$row["t_cour_nom"],1,0,'C'); 
+         $pdf->Cell(50,10,$row["t_cour_ponderation"]*20,1,0,'C'); 
+         // Add the weighted score to the sum variable 
+         $sum += $row["t_cour_ponderation"]*20*$row["t_deliberation_cote"]/20; 
+         $pdf->Cell(50,10,$row["t_deliberation_cote"],1,1,'C'); 
+         // Add the current course ponderation to the total ponderation variable 
+         $total_ponderation += $row["t_cour_ponderation"]*20; 
+     } 
+ } 
+  
+ // Output the total ponderation 
+ $pdf->Cell(50,10,'Total ponderation:',1,0,'C'); 
+ $pdf->Cell(50,10,$total_ponderation,1,0,'C'); 
+ $pdf->Cell(50,10,'',1,1,'C'); 
+  
+ // Output the sum of weighted scores 
+ $pdf->Cell(50,10,'Total weighted score:',1,0,'C'); 
+ $pdf->Cell(50,10,'',1,0,'C'); 
+ $pdf->Cell(50,10,$sum,1,1,'C'); 
+  
+ // Output the PDF document 
+ $pdf->Output(); 
+  
+  
+ ?> 
+
+
+
+<?php
+ 
+ require('fpdf.php'); 
+ 
+ $conn=new PDO('mysql:host=localhost;dbname=deliberation','root',''); 
+  
+ $id=$_GET['id']; 
+ // Retrieve the data from the database 
+ $sql = "SELECT * FROM v_pdf where t_etudiant_id=$id" ; 
+ $result = $conn->query($sql); 
+ $result2 = $conn->query($sql); 
+ $rr=$result->fetchAll(); 
+  
+ // Create a new PDF instance 
+ $pdf = new FPDF(); 
+  
+ // Add a new page 
+ $pdf->AddPage(); 
+  
+ // Set font and font size for the title 
+ $pdf->SetFont('Arial','B',16); 
+  
+ // Add a title 
+ $pdf->Cell(0,10,'RELEVE DE COTE FACULTE DE SCIENCE',0,1,'C'); 
+ // Set font and font size for the table headers 
+ $pdf->SetFont('Arial','B',12); 
+ $pdf->cell(30,10,' '.'Etudiant: '.$rr[0]['t_etudiant_nom'].' ',1,0,'C'); 
+ $pdf->Ln(20); 
+ // Set table headers 
+ $pdf->Cell(50,10,'cour',1,0,'C'); 
+ $pdf->Cell(50,10,'ponderation',1,0,'C'); 
+ $pdf->Cell(50,10,'cote',1,1,'C'); 
+  
+ // Set font and font size for the table data 
+ $pdf->SetFont('Arial','',12); 
+  
+ // Initialize the sum variable 
+ $sum = 0; 
+ $total_ponderation = 0; // Initialize the total ponderation variable 
+  
+ // Add table data from database query 
+ if ($result->rowCount() > 0) { 
+     while($row = $result2->fetch()) { 
+         $pdf->Cell(50,10,$row["t_cour_nom"],1,0,'C'); 
+         $pdf->Cell(50,10,$row["t_cour_ponderation"]*20,1,0,'C'); 
+         // Add the weighted score to the sum variable 
+         $sum += $row["t_cour_ponderation"]*20*$row["t_deliberation_cote"]/20; 
+         $pdf->Cell(50,10,$row["t_deliberation_cote"],1,1,'C'); 
+         // Add the current course ponderation to the total ponderation variable 
+         $total_ponderation += $row["t_cour_ponderation"]*20; 
+     } 
+ } 
+  
+ // Output the total ponderation 
+ $pdf->Cell(50,10,'Total ponderation:',1,0,'C'); 
+ $pdf->Cell(50,10,$total_ponderation,1,0,'C'); 
+ $pdf->Cell(50,10,'',1,1,'C'); 
+  
+ // Output the sum of weighted scores 
+ $pdf->Cell(50,10,'Total weighted score:',1,0,'C'); 
+ $pdf->Cell(50,10,'',1,0,'C'); 
+ $pdf->Cell(50,10,$sum,1,1,'C'); 
+  
+
+ $pdf->Ln(10); 
+$pdf->Cell(0,10,'Pourcentage : '.$poucentage.'%',0,1,'C'); 
+$poucentage=$total_ponderation*100/2;
+
+ 
+ 
+  
+ // Output the PDF document 
+ $pdf->Output(); 
+  
+  
+ ?> 
+
+
+
+///fin 
+
+<?php 
+
+  
+require('fpdf.php');  
+  
+$conn=new PDO('mysql:host=localhost;dbname=deliberation','root','');  
+  
+$id=$_GET['id'];  
+// Retrieve the data from the database  
+$sql = "SELECT * FROM v_pdf where t_etudiant_id=$id" ;  
+$result = $conn->query($sql);  
+$result2 = $conn->query($sql);  
+$rr=$result->fetchAll();  
+  
+// Create a new PDF instance  
+$pdf = new FPDF();  
+  
+// Add a new page  
+$pdf->AddPage();  
+  
+// Set font and font size for the title  
+$pdf->SetFont('Arial','B',16);  
+  
+// Add a title  
+$pdf->Cell(0,10,'RELEVE DE COTE FACULTE DE SCIENCE',0,1,'C');  
+// Set font and font size for the table headers  
+$pdf->SetFont('Arial','B',12);  
+$pdf->cell(30,10,' '.'Etudiant: '.$rr[0]['t_etudiant_nom'].' ',1,0,'C');  
+$pdf->Ln(20);  
+// Set table headers  
+$pdf->Cell(50,10,'cour',1,0,'C');  
+$pdf->Cell(50,10,'ponderation',1,0,'C');  
+$pdf->Cell(50,10,'cote',1,1,'C');  
+  
+// Set font and font size for the table data  
+$pdf->SetFont('Arial','',12);  
+  
+// Initialize the sum variable  
+$sum = 0;  
+$total_ponderation = 0; // Initialize the total ponderation variable  
+  
+// Add table data from database query  
+if ($result->rowCount() > 0) {  
+    while($row = $result2->fetch()) {  
+        $pdf->Cell(50,10,$row["t_cour_nom"],1,0,'C');  
+        $pdf->Cell(50,10,$row["t_cour_ponderation"]*20,1,0,'C');  
+        // Add the weighted score to the sum variable  
+        $sum += $row["t_cour_ponderation"]*20*$row["t_deliberation_cote"]/20;  
+        $pdf->Cell(50,10,$row["t_deliberation_cote"],1,1,'C');  
+        // Add the current course ponderation to the total ponderation variable  
+        $total_ponderation += $row["t_cour_ponderation"]*20;  
+    }  
+}  
+  
+// Calculate the percentage  
+$percentage = round($sum*100/$total_ponderation);   
+  
+// Output the total ponderation  
+$pdf->Cell(50,10,'Total ponderation:',1,0,'C');  
+$pdf->Cell(50,10,$total_ponderation,1,0,'C');  
+$pdf->Cell(50,10,'',1,1,'C');  
+  
+// Output the sum of weighted scores  
+$pdf->Cell(50,10,'Total weighted score:',1,0,'C');  
+$pdf->Cell(50,10,'',1,0,'C');  
+$pdf->Cell(50,10,$sum,1,1,'C');  
+  
+// Output the percentage  
+$pdf->Ln(10);  
+$pdf->Cell(0,10,'Pourcentage : '.$percentage.'%',0,1,'C');  
+  
+// Output the PDF document  
+$pdf->Output();  
+  
+?>
+
+
+git config --global user.name 
+git config --global user.email
+
+
+
+
+
+
+
+
+style css:
+{
+border-radius:50%;
+postion:relative;
+top:-10px;
+left:-10px;
+
+
+}
+
+code php notification:
+<?php 
+$sql=msqli_query($bd,"SELECT* from x where id);
+$count=mysqli_num_row($sql);
+
+id
+
+<?php echo $count; ?> 
+
+?>
+
+
+
+intelligence artificielle :
+Plume AI :WOrd
+aizzy :pdf
+pebbey :image
+buildAI
+https://fr.adalo.com/ :permet de crée une application mobile sans code source 
